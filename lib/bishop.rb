@@ -18,7 +18,7 @@ class Bishop < Game
     false
   end
   
-  def clear?(new_spot, pot_pos = [])
+  def clear?(new_spot)
     current = pos.dup
     until board[current[0]].nil? || board[current[1]].nil?
       if new_spot[0] > current[0] && new_spot[1] > current[1] #moving up and right
