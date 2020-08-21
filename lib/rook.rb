@@ -2,7 +2,7 @@ require_relative 'playable'
 class Rook
   include Playable
   attr_accessor :pos
-  
+
   def initialize(pos, color)
     @pos = pos
     @color = color
@@ -14,14 +14,14 @@ class Rook
     false
   end
   
-  def open?(new_spot)
+  def clear?(new_spot)
     if new_spot[0] == @pos[0]
       for i in new_spot[1]..@pos[1] #if rook is moving vertically
-        return false if board[0][i] != ' - '
+        return false unless board[0][i] == ' - '
       end
     elsif new_spot[1] == @pos[1] #if rook is moving horizontally
       for i in new_spot[0]..@pos[0]
-        return false if board[i][0] != ' - '
+        return false unless board[i][0] == ' - '
       end
     end
     true
