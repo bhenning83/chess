@@ -15,17 +15,16 @@
 #   get user input on where to move it to
 #   check if it's valid
 #   change coordinate of the piece
+
 require_relative 'playable'
+
 class Game
-  include playable
+  include Playable
   attr_accessor :board
 
   def initialize
     @board = make_board
   end
-  
- 
 end
 
 game = Game.new
-game.display_board

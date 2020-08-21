@@ -1,11 +1,14 @@
 require_relative 'playable'
-class Bishop
+require_relative 'game'
+game = Game.new
+class Bishop < Game
   include Playable
-  attr_accessor :pos,
+  attr_accessor :pos, :board
   
-  def initialize(pos, color)
+  def initialize(pos, color, board)
     @pos = pos
     @color = color
+    @board = board
   end
 
   def valid?(new_spot)
@@ -17,7 +20,7 @@ class Bishop
   
   def clear?(new_spot, pot_pos = [])
     current = pos.dup
-    until @board[current[0]].nil? || @board[current[1]].nil?
+    until board[current[0]].nil? || board[current[1]].nil?
       if new_spot[0] > current[0] && new_spot[1] > current[1] #moving up and right
         current[0] += 1; current[1] += 1
         return true if current == new_spot
@@ -37,8 +40,8 @@ class Bishop
 
 
 end
-
-bishop = Bishop.new([5, 5], 'black')
+game = Game.new
+bishop = Bishop.new([5, 5], 'black', game.board)
 puts bishop.valid?([3, 3])
 puts bishop.valid?([5, 1])
 puts bishop.clear?([1, 6])

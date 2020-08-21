@@ -1,11 +1,13 @@
 require_relative 'playable'
-class Rook
+require_relative 'game'
+class Rook < Game
   include Playable
-  attr_accessor :pos
+  attr_accessor :pos, :board
 
-  def initialize(pos, color)
+  def initialize(pos, color, board)
     @pos = pos
     @color = color
+    @board = board
   end
 
   def valid?(new_spot)
