@@ -28,3 +28,5 @@ class Game
 end
 
 game = Game.new
+game.board[3][3] = ' x '
+game.display_board
