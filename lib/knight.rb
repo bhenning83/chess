@@ -36,7 +36,7 @@ class Knight < Game
 
   def on_board?(coord)
     coord.each do |value|
-      return false if value > 8 || value < 1 #creates a virtual 8x8 board
+      return false if value > 7 || value < 0 #creates a virtual 8x8 board
     end
     true
   end
