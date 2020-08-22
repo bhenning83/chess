@@ -1,5 +1,8 @@
 require_relative 'playable'
 require_relative 'game'
+require_relative 'king'
+require 'pry'
+
 class Rook < Game
   include Playable
   attr_accessor :pos, :board
@@ -18,11 +21,12 @@ class Rook < Game
   
   def clear?(new_spot)
     if new_spot[0] == @pos[0]
-      for i in new_spot[1]..@pos[1] #if rook is moving vertically
+      for i in @pos[1]...new_spot[1] #if rook is moving vertically
+        binding.pry
         return false unless board[0][i] == ' - '
       end
     elsif new_spot[1] == @pos[1] #if rook is moving horizontally
-      for i in new_spot[0]..@pos[0]
+      for i in @pos[0]...new_spot[0]
         return false unless board[i][0] == ' - '
       end
     end
@@ -30,8 +34,7 @@ class Rook < Game
   end
 end
 
-  rook = Rook.new([1, 1], 'black')
-  puts rook.valid?([3, 4])
-  puts rook.valid?([5, 1])
-  puts rook.open?([1, 6])
-  puts rook.open?([5, 2])
+  game = Game.new
+  rook = Rook.new([1, 7], 'black', game.board)
+  king = King.new([1, 5], 'black', game.board)
+  puts rook.clear?([1, 2])
