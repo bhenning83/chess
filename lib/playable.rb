@@ -4,7 +4,7 @@ module Playable
     (0..7).each do |i|
       hash[i] = Array.new(8, ' - ')
     end
-    hash
+    reverse_hash = Hash[hash.to_a.reverse]
   end
 
   def display_board
