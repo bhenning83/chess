@@ -18,9 +18,3 @@ class King < Game
     false
   end
 end
-
-game = Game.new
-king = King.new([4, 1], 'black', game.board)
-p king.valid?([5, 1])
-p king.valid?([6, 4])
-p king.valid?([4, 2])

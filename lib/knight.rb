@@ -45,6 +45,6 @@ end
 game = Game.new
 knight = Knight.new([1,1], 'white', game.board)
 p knight.valid?([2, 3])
-game.board[3][5] = King.new('black', [2, 3], game.board)
+game.board[2][3] = King.new('black', [2, 3], game.board)
 p knight.check?
 p game.board

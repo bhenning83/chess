@@ -26,7 +26,3 @@ class Game
     @board = make_board
   end
 end
-
-game = Game.new
-game.board[3][3] = ' x '
-game.display_board
