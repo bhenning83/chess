@@ -1,16 +1,18 @@
 require_relative 'playable'
 require_relative 'game'
 require_relative 'clearable'
+require 'pry'
 
 class Bishop < Game
   include Playable
   include Clearable
-  attr_accessor :pos, :board
+  attr_accessor :pos, :board, :poss_moves
   
   def initialize(pos, color, board)
     @pos = pos
     @color = color
     @board = board
+    @poss_moves = []
   end
 
   def valid?(new_spot)
@@ -19,12 +21,38 @@ class Bishop < Game
     return true if horz == vert
     false
   end
-  
+
+  def find_poss_moves
+    find_poss_moves_right
+    find_poss_moves_left
+  end
+
+  def find_poss_moves_right
+    start = pos[0] - pos[1]
+    current = [start - 1, -1]
+    8.times do
+      current[0] += 1
+      current[1] += 1
+      next if current[0] < 0 || current[0] > 7
+      next if current == pos
+      @poss_moves << current.dup
+    end
+  end
+
+  def find_poss_moves_left
+    start = pos[0] + pos[1]
+    current = [start + 1, -1]
+    8.times do
+      current[0] -= 1
+      current[1] += 1
+      next if current[0] < 0 || current[0] > 7
+      next if current == pos
+      @poss_moves << current.dup
+    end
+  end
 end
 game = Game.new
-bishop = Bishop.new([5, 5], 'black', game.board)
-game.board[2][2] = Bishop.new([2, 2], 'white', game.board)
-puts bishop.valid?([3, 3])
-puts bishop.valid?([5, 1])
-puts bishop.clear?([1, 6])
-puts bishop.clear?([1, 1])
+bishop = Bishop.new([3, 2], 'black', game.board)
+p game.display_board
+bishop.find_poss_moves
+p bishop.poss_moves
