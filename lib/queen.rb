@@ -1,18 +1,19 @@
 require_relative 'playable'
 require_relative 'clearable'
-require_relative 'game'
 require 'pry'
 
-class Queen < Game
+class Queen
   include Playable
   include Clearable
   attr_accessor :pos, :board, :poss_moves
+  attr_reader :symbol
   
-  def initialize(pos, color, board)
+  def initialize(pos, color, board, symbol)
     @pos = pos
     @color = color
     @board = board
     @poss_moves = []
+    @symbol = symbol
   end
 
   def valid?(new_spot)
@@ -73,9 +74,3 @@ class Queen < Game
     end
   end
 end
-game = Game.new
-queen = Queen.new([5, 5], 'black', game.board)
-game.board[2][2] = Queen.new([2, 2], 'black', game.board)
-puts queen.clear?([1, 1])
-puts queen.clear?([5, 0])
-puts queen.clear?([3, 6])

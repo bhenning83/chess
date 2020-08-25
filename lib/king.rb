@@ -1,15 +1,17 @@
 require_relative 'playable'
-require_relative 'game'
-class King < Game
-  include Playable
-  attr_accessor :pos, :board, :poss_moves
 
-  def initialize(pos, color, board)
+class King
+  include Playable
+  attr_accessor :pos, :board, :poss_moves, :symbol
+  attr_reader :color
+
+  def initialize(pos, color, board, symbol)
     @pos = pos
     @color = color
     @board = board
     @moves = [[1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]]
     @poss_moves = []
+    @symbol = symbol
   end
 
   def valid?(new_spot)
@@ -37,8 +39,3 @@ class King < Game
     true
   end
 end
-
-game = Game.new
-king = King.new([1, 0], 'white', game.board)
-king.find_poss_moves
-p king.poss_moves

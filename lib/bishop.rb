@@ -1,18 +1,19 @@
 require_relative 'playable'
-require_relative 'game'
 require_relative 'clearable'
 require 'pry'
 
-class Bishop < Game
+class Bishop
   include Playable
   include Clearable
   attr_accessor :pos, :board, :poss_moves
+  attr_reader :symbol
   
-  def initialize(pos, color, board)
+  def initialize(pos, color, board, symbol)
     @pos = pos
     @color = color
     @board = board
     @poss_moves = []
+    @symbol = symbol
   end
 
   def valid?(new_spot)
@@ -51,8 +52,3 @@ class Bishop < Game
     end
   end
 end
-game = Game.new
-bishop = Bishop.new([3, 2], 'black', game.board)
-p game.display_board
-bishop.find_poss_moves
-p bishop.poss_moves

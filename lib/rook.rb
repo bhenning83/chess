@@ -1,19 +1,19 @@
 require_relative 'playable'
 require_relative 'clearable'
-require_relative 'game'
-require_relative 'king'
 require 'pry'
 
-class Rook < Game
+class Rook
   include Playable
   include Clearable
   attr_accessor :pos, :board, :poss_moves
+  attr_reader :symbol
 
-  def initialize(pos, color, board)
+  def initialize(pos, color, board, symbol)
     @pos = pos
     @color = color
     @board = board
     @poss_moves = []
+    @symbol = symbol
   end
 
   def valid?(new_spot)
@@ -45,11 +45,3 @@ class Rook < Game
     end
   end
 end
-
-  game = Game.new
-  rook = Rook.new([5, 5], 'black', game.board)
-  #game.board[5][5] = King.new([5, 5], 'black', game.board)
-  puts rook.clear?([1, 5])
-  p game.display_board
-  rook.find_poss_moves
-  p rook.poss_moves

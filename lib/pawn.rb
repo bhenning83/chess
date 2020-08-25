@@ -1,18 +1,17 @@
 require_relative 'playable'
-require_relative 'game'
-require_relative 'king'
 require 'pry'
 
-class Pawn < Game
+class Pawn
   include Playable
   attr_accessor :pos, :board, :poss_moves
-  attr_reader :color
+  attr_reader :color, :symbol
 
-  def initialize(pos, color, board)
+  def initialize(pos, color, board, symbol)
     @pos = pos
     @color = color
     @board = board
     @poss_moves = []
+    @symbol = symbol
   end
 
   def valid?(new_spot)
@@ -85,13 +84,3 @@ class Pawn < Game
     attackable
   end
 end
-
-game = Game.new
-pawn = Pawn.new([0, 1], 'white', game.board)
-game.board[5][6] = King.new([6, 5], 'white', game.board)
-p pawn.check?
-pawn.find_poss_move
-p pawn.poss_moves
-bpawn = Pawn.new([7, 6], 'black', game.board)
-bpawn.find_poss_move
-p bpawn.poss_moves

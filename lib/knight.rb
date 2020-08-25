@@ -1,16 +1,16 @@
-require_relative 'game'
-require_relative 'king'
 require 'pry'
 
-class Knight < Game
+class Knight
   attr_accessor :pos, :board, :poss_moves
+  attr_reader :symbol
 
-  def initialize(pos, color, board)
+  def initialize(pos, color, board, symbol)
     @pos = pos
     @color = color
     @moves = [[-1, 2], [-1, -2], [-2, -1], [-2, 1], [1, 2], [1, -2], [2, 1], [2, -1]]
     @board = board
     @poss_moves = []
+    @symbol = symbol
   end
 
   def valid?(new_spot)
@@ -41,9 +41,3 @@ class Knight < Game
     true
   end
 end
-
-game = Game.new
-knight = Knight.new([1,1], 'white', game.board)
-game.board[2][3] = King.new('black', [2, 3], game.board)
-knight.find_poss_pos
-p knight.poss_moves
