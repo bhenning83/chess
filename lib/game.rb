@@ -97,6 +97,16 @@ class Game
       end
     end
   end
+
+  def find_white_king
+    board.each do |key, value|
+      if value.include?(' ♚ ')
+         idx = value.index(' ♚ ')
+         binding.pry
+         return [idx, key]
+      end
+    end
+  end
 end
 
 game = Game.new
