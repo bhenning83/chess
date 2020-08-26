@@ -24,17 +24,20 @@ require_relative 'bishop'
 require_relative 'queen'
 require_relative 'king'
 require_relative 'pawn'
+require_relative 'player'
 
 require 'pry'
 
 class Game
   include Playable
-  attr_accessor :board, :white_pieces, :black_pieces
+  attr_accessor :board, :white_pieces, :black_pieces, :player1, :player2
   
   def initialize
     @board = make_board
     @white_pieces = []
     @black_pieces = []
+    @player1 = Player.new('white', @board, make_white_army)
+    @player2 = Player.new('black', @board, make_black_army)
   end
 
   def make_white_army
@@ -56,6 +59,7 @@ class Game
     queenw = Queen.new([3, 0], 'white', board, ' ♛ ')
     kingw = King.new([4, 0], 'white', board, ' ♚ ')
     white_pieces << rook1w << rook2w << knight1w << knight2w << bishop1w << bishop2w << queenw << kingw
+    white_pieces
   end
 
   def make_black_army
@@ -77,13 +81,14 @@ class Game
     queenb = Queen.new([3, 7], 'white', board, ' ♕ ')
     kingb = King.new([4, 7], 'white', board, ' ♔ ')
     black_pieces << rook1b << rook2b << knight1b << knight2b << bishop1b << bishop2b << queenb << kingb
+    black_pieces
   end
 
   def set_board
-    white_pieces.each do |piece|
+    player1.pieces.each do |piece|
       board[piece.pos[1]][piece.pos[0]] = piece.symbol
     end
-    black_pieces.each do |piece|
+    player2.pieces.each do |piece|
       board[piece.pos[1]][piece.pos[0]] = piece.symbol
     end
   end
@@ -107,11 +112,41 @@ class Game
       end
     end
   end
+
+  def attackw(spot)
+    piece = board[spot[1]][spot[0]]
+    return if piece == ' - '
+    if piece.color = 'black'
+      black_pieces.delete(piece)
+    end
+  end
+
+
+  def checkw?
+    target = find_black_king
+    white_pieces.each do |piece|
+      piece.poss_moves.each do |move|
+        next unless piece.clear?(move)
+        true if move == target
+      end
+    end
+    false
+  end
+
+  def checkb?
+    target = find_white_king
+    black_pieces.each do |piece|
+      piece.poss_moves.each do |move|
+        next unless piece.clear?(move)
+        true if move == target
+      end
+    end
+    false
+  end
 end
 
 game = Game.new
-game.make_white_army
-game.make_black_army
 game.set_board
-game.display_board
-p game.find_black_king
+p game.display_board
+
+
