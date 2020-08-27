@@ -42,13 +42,12 @@ class Player
       return nil
     end
     @new_spot = input.dup
-    select_spot until valid_spot?(new_spot)
   end
 
   def valid_spot?(new_spot)
     piece.find_poss_moves
-    return false unless piece.clear?(new_spot)
     return false unless piece.valid?(new_spot)
+    return false unless piece.clear?(new_spot)
     temp_spot = board[new_spot[1]][new_spot[0]]
     unless temp_spot == ' - '
       return false if temp_spot.color == self.color
@@ -56,9 +55,18 @@ class Player
     true
   end
 
+  def pick_again
+    unless valid_spot?(new_spot)
+      puts "Invalid move, try again."
+      move
+      return nil
+    end
+  end
+
   def move
     select_piece
     select_spot
+    pick_again
     old_spot = piece.dup.pos
     board[new_spot[1]][new_spot[0]] = piece.dup
     board[old_spot[1]][old_spot[0]] = ' - '
