@@ -126,7 +126,10 @@ class Game
   end
 
   def test
+    display_board
     player1.select_piece
+    display_board
+    player1.select_spot
     display_board
   end
 end

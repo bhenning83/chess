@@ -24,7 +24,12 @@ class Knight
     false
   end
 
-  def find_poss_pos(poss_pos = [])
+  def clear?(new_spot)
+    return true if poss_moves.include?(new_spot)
+    false
+  end
+
+  def find_poss_moves(poss_pos = [])
     @moves.each do |move|
       pos.each_index do |i|
         poss_pos[i] = pos[i] + move[i]
