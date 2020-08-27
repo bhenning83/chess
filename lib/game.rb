@@ -94,42 +94,40 @@ class Game
   end
 
   def attack(spot)
-    piece = board[spot[1]][spot[0]]
-    return if piece == ' - '
-    if color == 'white' && piece.color == 'black'
-      black_pieces.delete(piece)
-    elsif color == 'black' && piece.color == 'white'
-      white_pieces.delete(piece)
+    enemy_piece = board[spot[1]][spot[0]]
+    return if enemy_piece == ' - '
+    if color == 'white' && enemy_piece.color == 'black'
+      black_pieces.delete(enemy_piece)
+    elsif color == 'black' && enemy_piece.color == 'white'
+      white_pieces.delete(enemy_piece)
     end
   end
 
-  def checkw?
-    target = find_black_king
-    white_pieces.each do |piece|
-      piece.poss_moves.each do |move|
-        next unless piece.clear?(move)
-        true if move == target
-      end
-    end
-    false
-  end
+  # def checkw?
+  #   target = find_black_king
+  #   white_pieces.each do |piece|
+  #     piece.poss_moves.each do |move|
+  #       next unless piece.clear?(move)
+  #       true if move == target
+  #     end
+  #   end
+  #   false
+  # end
 
-  def checkb?
-    target = find_white_king
-    black_pieces.each do |piece|
-      piece.poss_moves.each do |move|
-        next unless piece.clear?(move)
-        true if move == target
-      end
-    end
-    false
-  end
+  # def checkb?
+  #   target = find_white_king
+  #   black_pieces.each do |piece|
+  #     piece.poss_moves.each do |move|
+  #       next unless piece.clear?(move)
+  #       true if move == target
+  #     end
+  #   end
+  #   false
+  # end
 
   def test
     display_board
-    player1.select_piece
-    display_board
-    player1.select_spot
+    player1.move
     display_board
   end
 end

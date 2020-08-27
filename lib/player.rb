@@ -55,4 +55,14 @@ class Player
     end
     true
   end
+
+  def move
+    select_piece
+    select_spot
+    old_spot = piece.dup.pos
+    board[new_spot[1]][new_spot[0]] = piece.dup
+    board[old_spot[1]][old_spot[0]] = ' - '
+    piece.pos = new_spot.dup
+  end
+
 end
