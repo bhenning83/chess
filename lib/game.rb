@@ -109,38 +109,35 @@ class Game
     white_pieces.each do |piece|
       piece.poss_moves.each do |move|
         next unless piece.clear?(move)
-        true if move == target
+        # next unless piece.valid?(move)
+        return true if move == target
       end
     end
     false
   end
 
   def checkb?
-    target = find_white_king
+    target = player1.king.pos
     black_pieces.each do |piece|
       piece.poss_moves.each do |move|
         next unless piece.clear?(move)
-        true if move == target
+        # next unless piece.valid?(move)
+        return true if move == target
       end
     end
     false
   end
 
   def test
-    test_pawn = Pawn.new([2, 2], 'black', board, ' ♙ ')
-    board[2][2] = test_pawn
-    black_pieces << test_pawn
-    black_pieces.each do |piece|
-      p piece.pos
-    end
+    test_knight = Knight.new([3, 2], 'black', board, ' ♘ ')
+    board[2][3] = test_knight
+    black_pieces << test_knight
     display_board
     player1.move
     attack(player1)
     display_board
-    black_pieces.each do |piece|
-      p piece.pos
-    end
-    p player2.king.pos
+    p player1.king.pos
+    p checkb?
   end
 end
 

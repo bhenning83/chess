@@ -12,7 +12,6 @@ class Pawn
     @board = board
     @poss_moves = []
     @symbol = symbol
-    find_poss_moves
   end
 
   def clear?(new_spot)
@@ -26,19 +25,6 @@ class Pawn
       return true if new_spot[1] - pos[1] == 1
     else 
       return true if pos[1] - new_spot[1] == 1
-    end
-    false
-  end
-
-  def check?
-    if color == 'white'
-      return if pos[1] == 7
-      return true if board[pos[1] + 1][pos[0] + 1].is_a?(King)
-      return true if board[pos[1] + 1][pos[0] - 1].is_a?(King)
-    else 
-      return if pos[1] == 0
-      return true if board[pos[1] - 1][pos[0] + 1].is_a?(King)
-      return true if board[pos[1] - 1][pos[0] - 1].is_a?(King)
     end
     false
   end
@@ -59,16 +45,6 @@ class Pawn
     end
   end
 
-  def possible_attacks_white(pieces = [], attackable = [])
-    pieces << board[pos[1] + 1][pos[0] + 1] unless pos[0] == 7
-    pieces << board[pos[1] + 1][pos[0] - 1] unless pos[0] == 0
-    pieces.each do |piece|
-      next if piece == ' - '
-      attackable << piece.pos if piece.color == 'black'
-    end
-    attackable
-  end
-
   def find_poss_move_black
     return if pos[1] == 0
     poss_moves << [pos[0], pos[1] - 1]
@@ -78,6 +54,18 @@ class Pawn
     possible_attacks_black.each do |spot|
       poss_moves << spot
     end
+  end
+
+  def possible_attacks_white(pieces = [], attackable = [])
+    pieces << board[pos[1] + 1][pos[0] + 1] unless pos[0] == 7
+    pieces << board[pos[1] + 1][pos[0] - 1] unless pos[0] == 0
+    binding.pry
+    pieces.each do |piece|
+      next if piece == ' - '
+      attackable << piece.pos if piece.color == 'black'
+      binding.pry
+    end
+    attackable
   end
 
   def possible_attacks_black(pieces = [], attackable = [])
