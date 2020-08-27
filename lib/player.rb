@@ -3,7 +3,7 @@ require_relative 'clearable'
 class Player
   include Clearable
   attr_accessor :board, :pieces, :king, :piece, :new_spot
-  attr_reader :color
+  attr_reader :color, :taken_piece
 
   def initialize(color, board, pieces, king)
     @color = color
@@ -12,6 +12,7 @@ class Player
     @king = king
     @piece = nil
     @new_spot = nil
+    @taken_piece = nil
   end
 
   def select_piece
@@ -45,7 +46,6 @@ class Player
   end
 
   def valid_spot?(new_spot)
-    piece.find_poss_moves
     return false unless piece.valid?(new_spot)
     return false unless piece.clear?(new_spot)
     temp_spot = board[new_spot[1]][new_spot[0]]
@@ -68,6 +68,7 @@ class Player
     select_spot
     pick_again
     old_spot = piece.dup.pos
+    @taken_piece = board[new_spot[1]][new_spot[0]]
     board[new_spot[1]][new_spot[0]] = piece.dup
     board[old_spot[1]][old_spot[0]] = ' - '
     piece.pos = new_spot.dup

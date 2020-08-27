@@ -93,6 +93,7 @@ class Game
     end
   end
 
+  #removes a taken piece from that player's list of pieces
   def attack(player)
     if player == player1
       return if player1.taken_piece == ' - '
@@ -103,27 +104,27 @@ class Game
     end
   end
 
-  # def checkw?
-  #   target = find_black_king
-  #   white_pieces.each do |piece|
-  #     piece.poss_moves.each do |move|
-  #       next unless piece.clear?(move)
-  #       true if move == target
-  #     end
-  #   end
-  #   false
-  # end
+  def checkw?
+    target = player2.king.pos
+    white_pieces.each do |piece|
+      piece.poss_moves.each do |move|
+        next unless piece.clear?(move)
+        true if move == target
+      end
+    end
+    false
+  end
 
-  # def checkb?
-  #   target = find_white_king
-  #   black_pieces.each do |piece|
-  #     piece.poss_moves.each do |move|
-  #       next unless piece.clear?(move)
-  #       true if move == target
-  #     end
-  #   end
-  #   false
-  # end
+  def checkb?
+    target = find_white_king
+    black_pieces.each do |piece|
+      piece.poss_moves.each do |move|
+        next unless piece.clear?(move)
+        true if move == target
+      end
+    end
+    false
+  end
 
   def test
     test_pawn = Pawn.new([2, 2], 'black', board, ' ♙ ')
@@ -139,6 +140,7 @@ class Game
     black_pieces.each do |piece|
       p piece.pos
     end
+    p player2.king.pos
   end
 end
 

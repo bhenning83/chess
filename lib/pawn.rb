@@ -12,6 +12,7 @@ class Pawn
     @board = board
     @poss_moves = []
     @symbol = symbol
+    find_poss_moves
   end
 
   def clear?(new_spot)
