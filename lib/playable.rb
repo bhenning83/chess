@@ -10,8 +10,8 @@ module Playable
   def display_board
     board.each do |_key, value|
       puts
-      value.each do |chip|
-        print chip
+      value.each do |piece|
+        piece == ' - ' ? (print piece) : (print piece.symbol)
       end
     end
     puts
