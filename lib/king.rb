@@ -14,6 +14,11 @@ class King
     @symbol = symbol
   end
 
+  def clear?(new_spot)
+    return true if poss_moves.include?(new_spot)
+    false
+  end
+
   def valid?(new_spot)
     new_spot.each_index do |i|
       diff = (new_spot[i] - pos[i]).abs

@@ -42,12 +42,13 @@ class Player
       return nil
     end
     @new_spot = input.dup
-    select_spot until valid?(new_spot)
+    select_spot until valid_spot?(new_spot)
   end
 
-  def valid?(new_spot)
+  def valid_spot?(new_spot)
     piece.find_poss_moves
     return false unless piece.clear?(new_spot)
+    return false unless piece.valid?(new_spot)
     temp_spot = board[new_spot[1]][new_spot[0]]
     unless temp_spot == ' - '
       return false if temp_spot.color == self.color

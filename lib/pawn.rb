@@ -14,6 +14,11 @@ class Pawn
     @symbol = symbol
   end
 
+  def clear?(new_spot)
+    return true if poss_moves.include?(new_spot)
+    false
+  end
+
   def valid?(new_spot)
     return false if new_spot[0] != pos[0]
     if color == 'white'
@@ -37,7 +42,7 @@ class Pawn
     false
   end
 
-  def find_poss_move
+  def find_poss_moves
     find_poss_move_black if color == 'black'
     find_poss_move_white if color == 'white'
   end
