@@ -2,7 +2,7 @@ require 'pry'
 
 class Knight
   attr_accessor :pos, :board, :poss_moves
-  attr_reader :symbol
+  attr_reader :symbol, :color
 
   def initialize(pos, color, board, symbol)
     @pos = pos
