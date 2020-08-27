@@ -72,32 +72,34 @@ class Game
     pawn7b = Pawn.new([6, 6], 'black', board, ' ♙ ')
     pawn8b = Pawn.new([7, 6], 'black', board, ' ♙ ')
     black_pieces << pawn1b << pawn2b << pawn3b << pawn4b << pawn5b << pawn6b << pawn7b << pawn8b
-    rook1b = Rook.new([0, 7], 'white', board, ' ♖ ')
-    rook2b = Rook.new([7, 7], 'white', board, ' ♖ ')
-    knight1b = Knight.new([1, 7], 'white', board, ' ♘ ')
-    knight2b = Knight.new([6, 7], 'white', board, ' ♘ ')
-    bishop1b = Bishop.new([2, 7], 'white', board, ' ♗ ')
-    bishop2b = Bishop.new([5, 7], 'white', board, ' ♗ ')
-    queenb = Queen.new([3, 7], 'white', board, ' ♕ ')
-    @kingb = King.new([4, 7], 'white', board, ' ♔ ')
+    rook1b = Rook.new([0, 7], 'black', board, ' ♖ ')
+    rook2b = Rook.new([7, 7], 'black', board, ' ♖ ')
+    knight1b = Knight.new([1, 7], 'black', board, ' ♘ ')
+    knight2b = Knight.new([6, 7], 'black', board, ' ♘ ')
+    bishop1b = Bishop.new([2, 7], 'black', board, ' ♗ ')
+    bishop2b = Bishop.new([5, 7], 'black', board, ' ♗ ')
+    queenb = Queen.new([3, 7], 'black', board, ' ♕ ')
+    @kingb = King.new([4, 7], 'black', board, ' ♔ ')
     black_pieces << rook1b << rook2b << knight1b << knight2b << bishop1b << bishop2b << queenb << kingb
     black_pieces
   end
 
   def set_board
     player1.pieces.each do |piece|
-      board[piece.pos[1]][piece.pos[0]] = piece.symbol
+      board[piece.pos[1]][piece.pos[0]] = piece
     end
     player2.pieces.each do |piece|
-      board[piece.pos[1]][piece.pos[0]] = piece.symbol
+      board[piece.pos[1]][piece.pos[0]] = piece
     end
   end
 
-  def attackw(spot)
+  def attack(spot)
     piece = board[spot[1]][spot[0]]
     return if piece == ' - '
-    if piece.color = 'black'
+    if color == 'white' && piece.color == 'black'
       black_pieces.delete(piece)
+    elsif color == 'black' && piece.color == 'white'
+      white_pieces.delete(piece)
     end
   end
 
@@ -122,8 +124,13 @@ class Game
     end
     false
   end
+
+  def test
+    player1.select_piece
+    display_board
+  end
 end
 
 game = Game.new
 game.set_board
-
+game.test
