@@ -12,6 +12,7 @@ class King
     @moves = [[1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]]
     @poss_moves = []
     @symbol = symbol
+    find_poss_moves
   end
 
   def clear?(new_spot)

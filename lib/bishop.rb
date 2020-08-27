@@ -14,6 +14,7 @@ class Bishop
     @board = board
     @poss_moves = []
     @symbol = symbol
+    find_poss_moves
   end
 
   def valid?(new_spot)

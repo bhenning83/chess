@@ -107,7 +107,6 @@ class Game
   def checkw?
     target = player2.king.pos
     white_pieces.each do |piece|
-      piece.find_poss_moves
       piece.poss_moves.each do |move|
         next unless piece.clear?(move)
         # next unless piece.valid?(move)
@@ -120,7 +119,6 @@ class Game
   def checkb?
     target = player1.king.pos
     black_pieces.each do |piece|
-      piece.find_poss_moves
       piece.poss_moves.each do |move|
         next unless piece.clear?(move)
         # next unless piece.valid?(move)

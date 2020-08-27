@@ -12,6 +12,7 @@ class Pawn
     @board = board
     @poss_moves = []
     @symbol = symbol
+    find_poss_moves
   end
 
   def clear?(new_spot)
@@ -59,11 +60,9 @@ class Pawn
   def possible_attacks_white(pieces = [], attackable = [])
     pieces << board[pos[1] + 1][pos[0] + 1] unless pos[0] == 7
     pieces << board[pos[1] + 1][pos[0] - 1] unless pos[0] == 0
-    binding.pry
     pieces.each do |piece|
       next if piece == ' - '
       attackable << piece.pos if piece.color == 'black'
-      binding.pry
     end
     attackable
   end
