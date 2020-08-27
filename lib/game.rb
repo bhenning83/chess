@@ -93,13 +93,13 @@ class Game
     end
   end
 
-  def attack(spot)
-    enemy_piece = board[spot[1]][spot[0]]
-    return if enemy_piece == ' - '
-    if color == 'white' && enemy_piece.color == 'black'
-      black_pieces.delete(enemy_piece)
-    elsif color == 'black' && enemy_piece.color == 'white'
-      white_pieces.delete(enemy_piece)
+  def attack(player)
+    if player == player1
+      return if player1.taken_piece == ' - '
+      black_pieces.delete(player1.taken_piece)
+    else
+      return if player2.taken_piece == ' - '
+      white_pieces.delete(player2.taken_piece)
     end
   end
 
@@ -126,9 +126,19 @@ class Game
   # end
 
   def test
+    test_pawn = Pawn.new([2, 2], 'black', board, ' ♙ ')
+    board[2][2] = test_pawn
+    black_pieces << test_pawn
+    black_pieces.each do |piece|
+      p piece.pos
+    end
     display_board
     player1.move
+    attack(player1)
     display_board
+    black_pieces.each do |piece|
+      p piece.pos
+    end
   end
 end
 
