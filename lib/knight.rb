@@ -14,17 +14,6 @@ class Knight
     find_poss_moves
   end
 
-  def valid?(new_spot)
-    location = []
-    @moves.each do |move|
-      @pos.each_index do |i|
-        location[i] = @pos[i] + move[i]
-        return true if location == new_spot
-      end
-    end
-    false
-  end
-
   def clear?(new_spot)
     return true if poss_moves.include?(new_spot)
     false

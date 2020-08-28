@@ -20,14 +20,6 @@ class King
     false
   end
 
-  def valid?(new_spot)
-    new_spot.each_index do |i|
-      diff = (new_spot[i] - pos[i]).abs
-      return true if diff == 1
-    end
-    false
-  end
-
   def find_poss_moves(poss_pos = [])
     @moves.each do |move|
       pos.each_index do |i|

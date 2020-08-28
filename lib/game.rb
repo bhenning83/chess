@@ -109,7 +109,6 @@ class Game
     white_pieces.each do |piece|
       piece.poss_moves.each do |move|
         next unless piece.clear?(move)
-        # next unless piece.valid?(move)
         return true if move == target
       end
     end
@@ -121,7 +120,6 @@ class Game
     black_pieces.each do |piece|
       piece.poss_moves.each do |move|
         next unless piece.clear?(move)
-        # next unless piece.valid?(move)
         return true if move == target
       end
     end

@@ -17,13 +17,6 @@ class Bishop
     find_poss_moves
   end
 
-  def valid?(new_spot)
-    horz = (new_spot[0] - @pos[0]).abs
-    vert = (new_spot[1] - @pos[1]).abs
-    return true if horz == vert
-    false
-  end
-
   def find_poss_moves
     find_poss_moves_right
     find_poss_moves_left

@@ -20,16 +20,6 @@ class Pawn
     false
   end
 
-  def valid?(new_spot)
-    return false if new_spot[0] != pos[0]
-    if color == 'white'
-      return true if new_spot[1] - pos[1] == 1
-    else 
-      return true if pos[1] - new_spot[1] == 1
-    end
-    false
-  end
-
   def find_poss_moves
     find_poss_move_black if color == 'black'
     find_poss_move_white if color == 'white'
