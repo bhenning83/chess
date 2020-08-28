@@ -15,7 +15,7 @@ class Player
     @taken_piece = nil
   end
 
-  def select_piece
+  def select_piece(input = [])
     puts "#{color}, select piece to move"
     input = gets.chomp.strip.gsub(/[{}()<>\[\] ,]/, '').split(//)
     input[0] = input[0].to_i - 1; input[1] = input[1].to_i - 1
@@ -34,7 +34,7 @@ class Player
     false
   end
 
-  def select_spot
+  def select_spot(input = [])
     puts "Select location to move"
     input = gets.chomp.strip.gsub(/[{}()<>\[\] ,]/, '').split(//)
     input[0] = input[0].to_i - 1; input[1] = input[1].to_i - 1
@@ -68,10 +68,11 @@ class Player
     select_piece
     select_spot
     pick_again
-    old_spot = piece.dup.pos
-    @taken_piece = board[new_spot[1]][new_spot[0]]
+    return unless valid_spot?(new_spot)
+    old_spot = piece.dup.pos 
+    @taken_piece = board[new_spot[1]][new_spot[0]] #for refence when deleting from list of player's pieces
     board[new_spot[1]][new_spot[0]] = piece.dup
-    board[old_spot[1]][old_spot[0]] = ' - '
+    board[old_spot[1]][old_spot[0]] = ' - ' #when it goes twice, this overrides
     piece.pos = new_spot.dup
   end
 
