@@ -20,10 +20,40 @@ class Pawn
     false
   end
 
-  def find_poss_moves
-    find_poss_move_black if color == 'black'
-    find_poss_move_white if color == 'white'
+  def valid?(new_spot) #validity covered in clear?
+    true
   end
+
+  def find_poss_moves
+    @poss_moves = []
+    if color == 'black'
+      find_poss_move_black
+      #remove_forward_attack_black
+    else
+      find_poss_move_white
+      #remove_forward_attack_white
+    end
+  end
+
+  # def remove_forward_attack_black
+  #   find_poss_move_black
+  #   poss_moves.each do |pm|
+  #     poss_moves.delete(pm) unless board[pm[1]][pm[0]] == ' - '
+  #   end
+  #   possible_attacks_black.each do |spot|
+  #     poss_moves << spot
+  #   end
+  # end
+
+  # def remove_forward_attack_white
+  #   find_poss_move_white
+  #   poss_moves.each do |pm|
+  #     poss_moves.delete(pm) unless board[pm[1]][pm[0]] == ' - '
+  #   end
+  #   possible_attacks_black.each do |spot|
+  #     poss_moves << spot
+  #   end
+  # end
 
   def find_poss_move_white
     return if pos[1] == 7
@@ -41,9 +71,6 @@ class Pawn
     poss_moves << [pos[0], pos[1] - 1]
     if pos[1] == 6
       poss_moves << [pos[0], pos[1] - 2]
-    end
-    possible_attacks_black.each do |spot|
-      poss_moves << spot
     end
   end
 

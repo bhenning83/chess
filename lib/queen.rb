@@ -17,7 +17,17 @@ class Queen
     find_poss_moves
   end
 
+  def valid?(new_spot)
+    horz = (new_spot[0] - @pos[0]).abs
+    vert = (new_spot[1] - @pos[1]).abs
+    return true if horz == vert #if moving diagnolly
+    return true if new_spot[0] == @pos[0] #if moving vertically
+    return true if new_spot[1] == @pos[1] #if moving horizontally
+    false
+  end
+
   def find_poss_moves
+    @poss_moves = []
     find_poss_moves_right
     find_poss_moves_left
     find_poss_moves_v

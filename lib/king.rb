@@ -15,12 +15,21 @@ class King
     find_poss_moves
   end
 
+  def valid?(new_spot)
+    new_spot.each_index do |i|
+      diff = (new_spot[i] - pos[i]).abs
+      return true if diff == 1
+    end
+    false
+  end
+
   def clear?(new_spot)
     return true if poss_moves.include?(new_spot)
     false
   end
 
   def find_poss_moves(poss_pos = [])
+    @find_poss_moves = []
     @moves.each do |move|
       pos.each_index do |i|
         poss_pos[i] = pos[i] + move[i]
