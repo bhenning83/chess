@@ -13,30 +13,36 @@ module Clearable
   end
 
   def clear_du?(new_spot)
-    clear_ur?(new_spot) if new_spot[0] > pos[0]
-    clear_ul?(new_spot) if new_spot[0] < pos[0]
+    if new_spot[0] > pos[0]
+      clear_ur?(new_spot) 
+    else
+      clear_ul?(new_spot)
+    end
   end
 
   def clear_dd?(new_spot)
-    clear_dr?(new_spot) if new_spot[0] > pos[0]
-    clear_dl?(new_spot) if new_spot[0] < pos[0]
+    if new_spot[0] > pos[0]
+      clear_dr?(new_spot) 
+    else
+      clear_dl?(new_spot)
+    end
   end
 
   def clear_ur?(new_spot) #moving up and right
     current = pos.dup
-    diff = (new_spot[0] - pos[0]).abs
-    if new_spot[0] > pos[0] 
-      (diff - 1).times do
-        current[0] += 1; current[1] += 1
-        return false unless current == ' - '
-      end
+    diff = (new_spot[0] - pos[0])
+    return true if diff == 1
+    (diff - 1).times do
+      current[0] += 1; current[1] += 1
+      return false unless current == ' - '
     end
     true
   end
 
   def clear_ul?(new_spot) #moving up and left
     current = pos.dup
-    diff = (new_spot[0] - pos[0]).abs
+    diff = (pos[0] - new_spot[0])
+    return true if diff == 1
     (diff - 1).times do
       current[0] -= 1; current[1] += 1
       return false unless current == ' - '
@@ -47,6 +53,7 @@ module Clearable
   def clear_dr?(new_spot) #moving down and right
     current = pos.dup
     diff = (new_spot[0] - pos[0]).abs
+    return true if diff == 1
     if new_spot[0] > pos[0] 
       (diff - 1).times do
         current[0] += 1; current[1] -= 1
@@ -58,7 +65,8 @@ module Clearable
 
   def clear_dl?(new_spot) #moving down and left
     current = pos.dup
-    diff = (new_spot[0] - pos[0]).abs
+    diff = (pos[0] - new_spot[0]).abs
+    return true if diff == 1
     if new_spot[0] > pos[0] 
       (diff - 1).times do
         current[0] -= 1; current[1] -= 1
