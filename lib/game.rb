@@ -149,27 +149,6 @@ class Game
     end
   end
 
-  #removes a taken piece from that player's list of pieces
-  def attack(player)
-    if player == player1
-      return if player1.taken_piece == ' - '
-      black_pieces.delete(player1.taken_piece)
-    else
-      return if player2.taken_piece == ' - '
-      white_pieces.delete(player2.taken_piece)
-    end
-  end
-
-  def replace_taken_piece(player)
-    if player == player1
-      return if player1.taken_piece == ' - '
-      black_pieces << player1.taken_piece
-    else
-      return if player2.taken_piece == ' - '
-      white_pieces << player2.taken_piece
-    end
-  end
-
   def checkw?
     target = find_black_king
     white_pieces.each do |piece|
@@ -188,45 +167,87 @@ class Game
     target = find_white_king
     black_pieces.each do |piece|
       piece.find_poss_moves
+      player2.piece = piece
       piece.poss_moves.each do |move|
-        next unless piece.clear?(move)
-        next unless piece.valid?(move)
+        player2.new_spot = move
+        next unless player2.valid_spot?
         return true if move == target
       end
     end
     false
   end
 
-  def checkmatew?(counter = 0)
+  def checkmatew?
     black_pieces.each do |piece|
       temp_piece = piece.dup
       temp_piece.find_poss_moves
       player2.piece = temp_piece
       temp_piece.poss_moves.each do |poss_move| #cycle through every legal move of every opponent piece to try to block check
-        player2.new_spot = poss_move
-        next unless player2.valid_spot?
-        player2.move
-        attack(player2)
+        play_out_move(poss_move, player2)
         unless checkw?
-          board[temp_piece.pos[1]][temp_piece.pos[0]] = ' - '
-          board[piece.pos[1]][piece.pos[0]] = piece
-          replace_taken_piece(player2)
-          set_board
+          reset_board(temp_piece, piece, player2)
           return false
         end
-        replace_taken_piece(player2)
-        board[temp_piece.pos[1]][temp_piece.pos[0]] = ' - '
-        board[piece.pos[1]][piece.pos[0]] = piece
-        set_board
+        reset_board(temp_piece, piece, player2)
       end
     end
-    set_board
     true
   end
-        
 
   def checkmateb?
+    white_pieces.each do |piece|
+      temp_piece = piece.dup
+      temp_piece.find_poss_moves
+      player1.piece = temp_piece
+      temp_piece.poss_moves.each do |poss_move| #cycle through every legal move of every opponent piece to try to block check
+        play_out_move(poss_move, player1)
+        unless checkb?
+          reset_board(temp_piece, piece, player1)
+          return false
+        end
+        reset_board(temp_piece, piece, player1)
+      end
+    end
+    true
   end
+
+  def reset_board(temp_piece, piece, player)
+    board[temp_piece.pos[1]][temp_piece.pos[0]] = ' - '
+    board[piece.pos[1]][piece.pos[0]] = piece
+    replace_taken_piece(player)
+    set_board
+  end
+
+  #temporarily moves defender's pieces to try to block check
+  def play_out_move(poss_move, player)
+    player.new_spot = poss_move
+    return unless player.valid_spot?
+    player.move
+    attack(player)
+  end
+
+   #removes a taken piece from that player's list of pieces
+   def attack(player)
+    if player == player1
+      return if player1.taken_piece == ' - '
+      black_pieces.delete(player1.taken_piece)
+    else
+      return if player2.taken_piece == ' - '
+      white_pieces.delete(player2.taken_piece)
+    end
+  end
+
+  # to use so hypothetical moves don't permanently delete
+  # from the piece list
+  def replace_taken_piece(player)
+    if player == player1
+      return if player1.taken_piece == ' - '
+      black_pieces << player1.taken_piece
+    else
+      return if player2.taken_piece == ' - '
+      white_pieces << player2.taken_piece
+    end
+  end 
 
   def test
     test_piece = Rook.new([0, 5], 'white', board, ' R ')

@@ -13,19 +13,13 @@ module Clearable
   end
 
   def clear_du?(new_spot)
-    if new_spot[0] > pos[0]
-      clear_ur?(new_spot) 
-    else
-      clear_ul?(new_spot)
-    end
+    return clear_ur?(new_spot) if new_spot[0] > pos[0]
+    return clear_ul?(new_spot) if new_spot[0] < pos[0]
   end
 
   def clear_dd?(new_spot)
-    if new_spot[0] > pos[0]
-      clear_dr?(new_spot) 
-    else
-      clear_dl?(new_spot)
-    end
+    return clear_dr?(new_spot) if new_spot[0] > pos[0]
+    return clear_dl?(new_spot) if new_spot[0] < pos[0]
   end
 
   def clear_ur?(new_spot) #moving up and right
