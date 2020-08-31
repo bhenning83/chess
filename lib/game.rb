@@ -40,8 +40,8 @@ class Game
     @black_pieces = []
     @white_pieces_storage = []
     @black_pieces_storage = []
-    @player1 = Player.new('white', @board, make_white_army, kingw)
-    @player2 = Player.new('black', @board, make_black_army, kingb)
+    @player1 = Player.new('white', @board, make_white_army)
+    @player2 = Player.new('black', @board, make_black_army)
   end
 
   def make_white_army
@@ -68,7 +68,7 @@ class Game
     # bishop1w = Bishop.new([2, 0], 'white', board, ' ♝ ')
     # bishop2w = Bishop.new([5, 0], 'white', board, ' ♝ ')
     # queenw = Queen.new([3, 0], 'white', board, ' ♛ ')
-    # @kingw = King.new([4, 0], 'white', board, ' ♚ ')
+    # kingw = King.new([4, 0], 'white', board, ' ♚ ')
     # white_pieces << rook1w
     # white_pieces << rook2w
     # white_pieces << knight1w
@@ -104,7 +104,7 @@ class Game
     # bishop1b = Bishop.new([2, 7], 'black', board, ' ♗ ')
     # bishop2b = Bishop.new([5, 7], 'black', board, ' ♗ ')
     # queenb = Queen.new([3, 7], 'black', board, ' ♕ ')
-    @kingb = King.new([0, 7], 'black', board, ' ♔ ')
+    kingb = King.new([0, 7], 'black', board, ' ♔ ')
     # black_pieces << rook1b
     # black_pieces << rook2b
     # black_pieces << knight1b
@@ -125,6 +125,30 @@ class Game
     end
   end
 
+  def find_black_king
+    board.each do |key, value|
+      value.each do |piece|
+        next if piece == ' - '
+        if piece.symbol == ' ♔ '
+         idx = value.index(piece)
+         return [idx, key]
+        end
+      end
+    end
+  end
+
+  def find_white_king
+    board.each do |key, value|
+      value.each do |piece|
+        next if piece == ' - '
+        if piece.symbol == ' ♚ '
+         idx = value.index(piece)
+         return [idx, key]
+        end
+      end
+    end
+  end
+
   #removes a taken piece from that player's list of pieces
   def attack(player)
     if player == player1
@@ -137,7 +161,7 @@ class Game
   end
 
   def checkw?
-    target = player2.king.pos
+    target = find_black_king
     white_pieces.each do |piece|
       piece.find_poss_moves
       piece.poss_moves.each do |move|
@@ -150,7 +174,7 @@ class Game
   end
 
   def checkb?
-    target = player1.king.pos
+    target = find_white_king
     black_pieces.each do |piece|
       piece.find_poss_moves
       piece.poss_moves.each do |move|
@@ -177,18 +201,21 @@ class Game
         player2.new_spot = poss_move
         next unless player2.valid_spot?
         player2.move
-        if checkw?
-          counter += 1
-          break
+        attack(player2)
+        unless checkw?
+          board[temp_piece.pos[1]][temp_piece.pos[0]] = ' - '
+          board[piece.pos[1]][piece.pos[0]] = piece
+          white_pieces = white_pieces_storage
+          return false
         end
-        board[temp_piece.pos[1]][temp_piece.pos[0]] = ' - '
-        white_pieces = white_pieces_storage
       end
       white_pieces = white_pieces_storage
+      board[temp_piece.pos[1]][temp_piece.pos[0]] = ' - '
+      board[piece.pos[1]][piece.pos[0]] = piece
     end
     white_pieces = white_pieces_storage
     set_board
-    return true if counter == black_pieces.length #if king was in check after every piece exhausted their defensive moves
+    true
   end
         
 

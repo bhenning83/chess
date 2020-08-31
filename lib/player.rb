@@ -2,14 +2,13 @@ require 'pry'
 require_relative 'clearable'
 class Player
   include Clearable
-  attr_accessor :board, :pieces, :king, :piece, :new_spot
+  attr_accessor :board, :pieces, :piece, :new_spot
   attr_reader :color, :taken_piece
 
-  def initialize(color, board, pieces, king)
+  def initialize(color, board, pieces)
     @color = color
     @board = board
     @pieces = pieces
-    @king = king
     @piece = nil
     @new_spot = nil
     @taken_piece = nil
