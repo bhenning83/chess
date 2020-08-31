@@ -10,12 +10,12 @@ module Playable
   def display_board
     board.each do |key, value|
       puts
-      print "#{key + 1} "
+      print "#{key + 1}| "
       value.each do |piece|
         piece == ' - ' ? (print piece) : (print piece.symbol)
       end
     end
-    puts 
-    puts "   A  B  C  D  E  F  G  H\n\n"
+    puts "\n  _________________________"
+    puts "    A  B  C  D  E  F  G  H\n\n"
   end
 end
