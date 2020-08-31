@@ -101,7 +101,7 @@ class Game
     # rook2b = Rook.new([7, 7], 'black', board, ' ♖ ')
     # knight1b = Knight.new([1, 7], 'black', board, ' ♘ ')
     # knight2b = Knight.new([6, 7], 'black', board, ' ♘ ')
-    # bishop1b = Bishop.new([2, 7], 'black', board, ' ♗ ')
+    bishop1b = Bishop.new([2, 7], 'black', board, ' ♗ ')
     # bishop2b = Bishop.new([5, 7], 'black', board, ' ♗ ')
     # queenb = Queen.new([3, 7], 'black', board, ' ♕ ')
     kingb = King.new([0, 7], 'black', board, ' ♔ ')
@@ -109,7 +109,7 @@ class Game
     # black_pieces << rook2b
     # black_pieces << knight1b
     # black_pieces << knight2b
-    # black_pieces << bishop1b
+    black_pieces << bishop1b
     # black_pieces << bishop2b
     # black_pieces << queenb
     black_pieces << kingb
@@ -160,13 +160,24 @@ class Game
     end
   end
 
+  def replace_taken_piece(player)
+    if player == player1
+      return if player1.taken_piece == ' - '
+      black_pieces << player1.taken_piece
+    else
+      return if player2.taken_piece == ' - '
+      white_pieces << player2.taken_piece
+    end
+  end
+
   def checkw?
     target = find_black_king
     white_pieces.each do |piece|
       piece.find_poss_moves
+      player1.piece = piece
       piece.poss_moves.each do |move|
-        next unless piece.clear?(move)
-        next unless piece.valid?(move)
+        player1.new_spot = move
+        next unless player1.valid_spot?
         return true if move == target
       end
     end
@@ -186,13 +197,7 @@ class Game
     false
   end
 
-  def reset_piece_list
-    @black_pieces_storage = @black_pieces.dup
-    @white_pieces_storage = @white_pieces.dup
-  end
-
   def checkmatew?(counter = 0)
-    reset_piece_list
     black_pieces.each do |piece|
       temp_piece = piece.dup
       temp_piece.find_poss_moves
@@ -205,15 +210,16 @@ class Game
         unless checkw?
           board[temp_piece.pos[1]][temp_piece.pos[0]] = ' - '
           board[piece.pos[1]][piece.pos[0]] = piece
-          white_pieces = white_pieces_storage
+          replace_taken_piece(player2)
+          set_board
           return false
         end
       end
-      white_pieces = white_pieces_storage
+      replace_taken_piece(player2)
       board[temp_piece.pos[1]][temp_piece.pos[0]] = ' - '
       board[piece.pos[1]][piece.pos[0]] = piece
+      set_board
     end
-    white_pieces = white_pieces_storage
     set_board
     true
   end
@@ -223,11 +229,17 @@ class Game
   end
 
   def test
-    test_piece = Rook.new([0, 4], 'white', board, ' R ')
+    test_piece = Rook.new([0, 5], 'white', board, ' R ')
     test_piece2 = Rook.new([1, 4], 'white', board, ' R ')
-    board[4][0] = test_piece
+    test_piece3 = Bishop.new([3, 4], 'white', board, ' B ')
+    board[5][0] = test_piece
     board[4][1] = test_piece2
-    white_pieces << test_piece << test_piece2
+    board[4][3] = test_piece3
+    white_pieces << test_piece << test_piece2 << test_piece3
+    display_board
+    player1.select_move_info
+    player1.move
+    display_board
     p checkmatew?
     display_board
   end

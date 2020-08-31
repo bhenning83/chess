@@ -45,8 +45,8 @@ class Player
   end
 
   def valid_spot?
-    return false unless piece.clear?(new_spot)
     return false unless piece.valid?(new_spot)
+    return false unless piece.clear?(new_spot)
     temp_spot = board[new_spot[1]][new_spot[0]]
     unless temp_spot == ' - '
       return false if temp_spot.color == self.color
