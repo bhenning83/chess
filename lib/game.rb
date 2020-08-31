@@ -214,11 +214,11 @@ class Game
           set_board
           return false
         end
+        replace_taken_piece(player2)
+        board[temp_piece.pos[1]][temp_piece.pos[0]] = ' - '
+        board[piece.pos[1]][piece.pos[0]] = piece
+        set_board
       end
-      replace_taken_piece(player2)
-      board[temp_piece.pos[1]][temp_piece.pos[0]] = ' - '
-      board[piece.pos[1]][piece.pos[0]] = piece
-      set_board
     end
     set_board
     true

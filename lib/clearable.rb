@@ -34,7 +34,7 @@ module Clearable
     return true if diff == 1
     (diff - 1).times do
       current[0] += 1; current[1] += 1
-      return false unless current == ' - '
+      return false unless board[current[1]][current[0]] == ' - '
     end
     true
   end
@@ -45,7 +45,7 @@ module Clearable
     return true if diff == 1
     (diff - 1).times do
       current[0] -= 1; current[1] += 1
-      return false unless current == ' - '
+      return false unless board[current[1]][current[0]] == ' - '
     end
     true
   end
@@ -56,7 +56,7 @@ module Clearable
     return true if diff == 1
     (diff - 1).times do
       current[0] += 1; current[1] -= 1
-      return false unless current == ' - '
+      return false unless board[current[1]][current[0]] == ' - '
     end
     true
   end
@@ -67,7 +67,7 @@ module Clearable
     return true if diff == 1
     (diff - 1).times do
       current[0] -= 1; current[1] -= 1
-      return false unless current == ' - '
+      return false unless board[current[1]][current[0]] == ' - '
     end
     true
   end
