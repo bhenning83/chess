@@ -31,6 +31,15 @@ class Pawn
     else
       find_poss_move_white
     end
+    remove_forward_attack
+  end
+
+  def remove_forward_attack
+    poss_moves.each do |spot|
+      if spot[0] == pos[0]
+        poss_moves.delete(spot) unless spot == ' - '
+      end
+    end
   end
 
   def find_poss_move_white(pieces = [])
@@ -50,6 +59,9 @@ class Pawn
     if pos[1] == 6
       poss_moves << [pos[0], pos[1] - 2]
     end
+    possible_attacks_black.each do |spot|
+      poss_moves << spot
+    end
   end
 
   def possible_attacks_white(pieces = [], attackable = [])
@@ -68,7 +80,7 @@ class Pawn
 
   def possible_attacks_black(pieces = [], attackable = [])
     spot1 = board[pos[1] - 1][pos[0] + 1] unless pos[0] == 7
-    spot1.pos = [pos[0] + 1, pos[1] + 1] unless spot1 == ' - ' || spot1.nil?
+    spot1.pos = [pos[0] + 1, pos[1] - 1] unless spot1 == ' - ' || spot1.nil?
     spot2 = board[pos[1] - 1][pos[0] - 1] unless pos[0] == 0
     spot2.pos = [pos[0] - 1, pos[1] + 1] unless spot2 == ' - ' || spot2.nil?
     pieces << spot1 unless spot1.nil?
