@@ -73,7 +73,6 @@ module Clearable
       end
     else #moving down
       (new_spot[1] + 1...pos[1]).each do |i|
-        binding.pry
         return false if board[i][pos[0]] != ' - '
       end
     end

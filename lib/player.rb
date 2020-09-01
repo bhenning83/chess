@@ -94,7 +94,6 @@ class Player
     board[new_spot[1]][new_spot[0]] = piece.dup
     board[old_spot[1]][old_spot[0]] = ' - ' #when it goes twice, this overrides
     @piece.pos = new_spot.dup
-    @piece.find_poss_moves
   end
 
 end

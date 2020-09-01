@@ -248,33 +248,31 @@ class Game
       white_pieces << player2.taken_piece
     end
   end 
+  
+  def play_turn(player)
+    display_board
+    player.select_move_info
+    player.move
+    attack(player)
+    set_board
+  end
 
   def test
-    display_board
-    player1.select_move_info
-    player1.move
-    attack(player1)
-    display_board
-    player2.select_move_info
-    player2.move
-    attack(player2)
-    display_board
-    player1.select_move_info
-    player1.move
-    attack(player1)
-    display_board
-    player2.select_move_info
-    player2.move
-    attack(player2)
-    display_board
-    player1.select_move_info
-    player1.move
-    attack(player1)
-    display_board
-    player2.select_move_info
-    player2.move
-    attack(player2)
-    display_board
+   play_turn(player1)
+   play_turn(player2)
+   play_turn(player1)
+   play_turn(player2)
+   play_turn(player1)
+   play_turn(player2)
+   play_turn(player1)
+   play_turn(player2)
+   play_turn(player1)
+   play_turn(player2)
+   play_turn(player1)
+   play_turn(player2)
+   play_turn(player1)
+   play_turn(player2)
+   display_board
   end
 end
 
