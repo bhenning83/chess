@@ -72,7 +72,8 @@ module Clearable
         return false if board[i][pos[0]] != ' - '
       end
     else #moving down
-      (new_spot[1]...pos[1] - 1).each do |i|
+      (new_spot[1] + 1...pos[1]).each do |i|
+        binding.pry
         return false if board[i][pos[0]] != ' - '
       end
     end
@@ -85,7 +86,7 @@ module Clearable
         return false if board[pos[1]][i] != ' - '
       end
     else #moving left
-      (new_spot[0]...pos[0] - 1).each do |i|
+      (new_spot[0] + 1...pos[0]).each do |i|
         return false if board[pos[1]][i] != ' - '
       end
     end
