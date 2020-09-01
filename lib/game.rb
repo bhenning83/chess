@@ -45,73 +45,73 @@ class Game
   end
 
   def make_white_army
-    # pawn1w = Pawn.new([0, 1], 'white', board, ' ♟︎ ')
-    # pawn2w = Pawn.new([1, 1], 'white', board, ' ♟︎ ')
-    # pawn3w = Pawn.new([2, 1], 'white', board, ' ♟︎ ')
-    # pawn4w = Pawn.new([3, 1], 'white', board, ' ♟︎ ')
-    # pawn5w = Pawn.new([4, 1], 'white', board, ' ♟︎ ')
-    # pawn6w = Pawn.new([5, 1], 'white', board, ' ♟︎ ')
-    # pawn7w = Pawn.new([6, 1], 'white', board, ' ♟︎ ')
-    # pawn8w = Pawn.new([7, 1], 'white', board, ' ♟︎ ')
-    # white_pieces << pawn1w
-    # white_pieces << pawn2w
-    # white_pieces << pawn3w
-    # white_pieces << pawn4w
-    # white_pieces << pawn5w
-    # white_pieces << pawn6w
-    # white_pieces << pawn7w
-    # white_pieces << pawn8w
-    # rook1w = Rook.new([0, 0], 'white', board, ' ♜ ')
-    # rook2w = Rook.new([7, 0], 'white', board, ' ♜ ')
-    # knight1w = Knight.new([1, 0], 'white', board, ' ♞ ')
-    # knight2w = Knight.new([6, 0], 'white', board, ' ♞ ')
-    # bishop1w = Bishop.new([2, 0], 'white', board, ' ♝ ')
-    # bishop2w = Bishop.new([5, 0], 'white', board, ' ♝ ')
-    # queenw = Queen.new([3, 0], 'white', board, ' ♛ ')
-    # kingw = King.new([4, 0], 'white', board, ' ♚ ')
-    # white_pieces << rook1w
-    # white_pieces << rook2w
-    # white_pieces << knight1w
-    # white_pieces << knight2w
-    # white_pieces << bishop1w
-    # white_pieces << bishop2w
-    # white_pieces << queenw
-    # white_pieces << kingw
+    pawn1w = Pawn.new([0, 1], 'white', board, ' ♟︎ ')
+    pawn2w = Pawn.new([1, 1], 'white', board, ' ♟︎ ')
+    pawn3w = Pawn.new([2, 1], 'white', board, ' ♟︎ ')
+    pawn4w = Pawn.new([3, 1], 'white', board, ' ♟︎ ')
+    pawn5w = Pawn.new([4, 1], 'white', board, ' ♟︎ ')
+    pawn6w = Pawn.new([5, 1], 'white', board, ' ♟︎ ')
+    pawn7w = Pawn.new([6, 1], 'white', board, ' ♟︎ ')
+    pawn8w = Pawn.new([7, 1], 'white', board, ' ♟︎ ')
+    white_pieces << pawn1w
+    white_pieces << pawn2w
+    white_pieces << pawn3w
+    white_pieces << pawn4w
+    white_pieces << pawn5w
+    white_pieces << pawn6w
+    white_pieces << pawn7w
+    white_pieces << pawn8w
+    rook1w = Rook.new([0, 0], 'white', board, ' ♜ ')
+    rook2w = Rook.new([7, 0], 'white', board, ' ♜ ')
+    knight1w = Knight.new([1, 0], 'white', board, ' ♞ ')
+    knight2w = Knight.new([6, 0], 'white', board, ' ♞ ')
+    bishop1w = Bishop.new([2, 0], 'white', board, ' ♝ ')
+    bishop2w = Bishop.new([5, 0], 'white', board, ' ♝ ')
+    queenw = Queen.new([3, 0], 'white', board, ' ♛ ')
+    kingw = King.new([4, 0], 'white', board, ' ♚ ')
+    white_pieces << rook1w
+    white_pieces << rook2w
+    white_pieces << knight1w
+    white_pieces << knight2w
+    white_pieces << bishop1w
+    white_pieces << bishop2w
+    white_pieces << queenw
+    white_pieces << kingw
     white_pieces
   end
 
   def make_black_army
-    # pawn1b = Pawn.new([0, 6], 'black', board, ' ♙ ')
-    # pawn2b = Pawn.new([1, 6], 'black', board, ' ♙ ')
-    # pawn3b = Pawn.new([2, 6], 'black', board, ' ♙ ')
-    # pawn4b = Pawn.new([3, 6], 'black', board, ' ♙ ')
-    # pawn5b = Pawn.new([4, 6], 'black', board, ' ♙ ')
-    # pawn6b = Pawn.new([5, 6], 'black', board, ' ♙ ')
-    # pawn7b = Pawn.new([6, 6], 'black', board, ' ♙ ')
-    # pawn8b = Pawn.new([7, 6], 'black', board, ' ♙ ')
-    # black_pieces << pawn1b 
-    # black_pieces << pawn2b 
-    # black_pieces << pawn3b 
-    # black_pieces << pawn4b 
-    # black_pieces << pawn5b 
-    # black_pieces << pawn6b 
-    # black_pieces << pawn7b 
-    # black_pieces << pawn8b
-    # rook1b = Rook.new([0, 7], 'black', board, ' ♖ ')
-    # rook2b = Rook.new([7, 7], 'black', board, ' ♖ ')
-    # knight1b = Knight.new([1, 7], 'black', board, ' ♘ ')
-    # knight2b = Knight.new([6, 7], 'black', board, ' ♘ ')
+    pawn1b = Pawn.new([0, 6], 'black', board, ' ♙ ')
+    pawn2b = Pawn.new([1, 6], 'black', board, ' ♙ ')
+    pawn3b = Pawn.new([2, 6], 'black', board, ' ♙ ')
+    pawn4b = Pawn.new([3, 6], 'black', board, ' ♙ ')
+    pawn5b = Pawn.new([4, 6], 'black', board, ' ♙ ')
+    pawn6b = Pawn.new([5, 6], 'black', board, ' ♙ ')
+    pawn7b = Pawn.new([6, 6], 'black', board, ' ♙ ')
+    pawn8b = Pawn.new([7, 6], 'black', board, ' ♙ ')
+    black_pieces << pawn1b 
+    black_pieces << pawn2b 
+    black_pieces << pawn3b 
+    black_pieces << pawn4b 
+    black_pieces << pawn5b 
+    black_pieces << pawn6b 
+    black_pieces << pawn7b 
+    black_pieces << pawn8b
+    rook1b = Rook.new([0, 7], 'black', board, ' ♖ ')
+    rook2b = Rook.new([7, 7], 'black', board, ' ♖ ')
+    knight1b = Knight.new([1, 7], 'black', board, ' ♘ ')
+    knight2b = Knight.new([6, 7], 'black', board, ' ♘ ')
     bishop1b = Bishop.new([2, 7], 'black', board, ' ♗ ')
-    # bishop2b = Bishop.new([5, 7], 'black', board, ' ♗ ')
-    # queenb = Queen.new([3, 7], 'black', board, ' ♕ ')
-    kingb = King.new([0, 7], 'black', board, ' ♔ ')
-    # black_pieces << rook1b
-    # black_pieces << rook2b
-    # black_pieces << knight1b
-    # black_pieces << knight2b
+    bishop2b = Bishop.new([5, 7], 'black', board, ' ♗ ')
+    queenb = Queen.new([3, 7], 'black', board, ' ♕ ')
+    kingb = King.new([4, 7], 'black', board, ' ♔ ')
+    black_pieces << rook1b
+    black_pieces << rook2b
+    black_pieces << knight1b
+    black_pieces << knight2b
     black_pieces << bishop1b
-    # black_pieces << bishop2b
-    # black_pieces << queenb
+    black_pieces << bishop2b
+    black_pieces << queenb
     black_pieces << kingb
     black_pieces
   end
@@ -250,18 +250,30 @@ class Game
   end 
 
   def test
-    test_piece = Rook.new([0, 5], 'white', board, ' R ')
-    test_piece2 = Rook.new([1, 4], 'white', board, ' R ')
-    test_piece3 = Bishop.new([3, 4], 'white', board, ' B ')
-    board[5][0] = test_piece
-    board[4][1] = test_piece2
-    board[4][3] = test_piece3
-    white_pieces << test_piece << test_piece2 << test_piece3
     display_board
     player1.select_move_info
     player1.move
+    attack(player1)
     display_board
-    p checkmatew?
+    player2.select_move_info
+    player2.move
+    attack(player2)
+    display_board
+    player1.select_move_info
+    player1.move
+    attack(player1)
+    display_board
+    player2.select_move_info
+    player2.move
+    attack(player2)
+    display_board
+    player1.select_move_info
+    player1.move
+    attack(player1)
+    display_board
+    player2.select_move_info
+    player2.move
+    attack(player2)
     display_board
   end
 end

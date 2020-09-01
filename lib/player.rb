@@ -16,14 +16,33 @@ class Player
 
   def select_piece
     puts "#{color}, select piece to move"
-    input = gets.chomp.strip.gsub(/[{}()<>\[\] ,]/, '').split(//)
-    input[0] = input[0].to_i - 1; input[1] = input[1].to_i - 1
+    input = input_getter
     if input[0] > 7 || input[0] < 0 || input[1] > 7 || input[1] < 0
       select_piece
       return nil
     end
     @piece = board[input[1]][input[0]]
+    piece.pos = input unless piece == ' - '
     select_piece if invalid?(input)
+  end
+
+  def input_getter
+    input = gets.chomp.strip.gsub(/[{}()<>\[\] ,]/, '').split(//)
+    input[0] = input_converter(input[0]) if input[0].match?(/[A-Za-z]/)
+    input[0] = input[0].to_i - 1; input[1] = input[1].to_i - 1
+    input
+  end
+
+  def input_converter(letter)
+    letter.upcase!
+    return 1 if letter == 'A'
+    return 2 if letter == 'B'
+    return 3 if letter == 'C'
+    return 4 if letter == 'D'
+    return 5 if letter == 'E'
+    return 6 if letter == 'F'
+    return 7 if letter == 'G'
+    return 8 if letter == 'H'
   end
 
   def invalid?(input)
@@ -35,8 +54,7 @@ class Player
 
   def select_spot
     puts "Select location to move"
-    input = gets.chomp.strip.gsub(/[{}()<>\[\] ,]/, '').split(//)
-    input[0] = input[0].to_i - 1; input[1] = input[1].to_i - 1
+    input = input_getter
     if input[0] > 7 || input[0] < 0 || input[1] > 7 || input[1] < 0
       select_spot
       return nil
@@ -45,6 +63,7 @@ class Player
   end
 
   def valid_spot?
+    @piece.find_poss_moves
     return false unless piece.valid?(new_spot)
     return false unless piece.clear?(new_spot)
     temp_spot = board[new_spot[1]][new_spot[0]]
@@ -74,7 +93,8 @@ class Player
     @taken_piece = board[new_spot[1]][new_spot[0]] #for refence when deleting from list of player's pieces
     board[new_spot[1]][new_spot[0]] = piece.dup
     board[old_spot[1]][old_spot[0]] = ' - ' #when it goes twice, this overrides
-    piece.pos = new_spot.dup
+    @piece.pos = new_spot.dup
+    @piece.find_poss_moves
   end
 
 end
