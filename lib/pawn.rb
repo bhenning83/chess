@@ -83,7 +83,7 @@ class Pawn
     spot1 = board[pos[1] - 1][pos[0] + 1] unless pos[0] == 7
     spot1.pos = [pos[0] + 1, pos[1] - 1] unless spot1 == ' - ' || spot1.nil?
     spot2 = board[pos[1] - 1][pos[0] - 1] unless pos[0] == 0
-    spot2.pos = [pos[0] - 1, pos[1] + 1] unless spot2 == ' - ' || spot2.nil?
+    spot2.pos = [pos[0] - 1, pos[1] - 1] unless spot2 == ' - ' || spot2.nil?
     pieces << spot1 unless spot1.nil?
     pieces << spot2 unless spot2.nil?
     pieces.each do |piece|
