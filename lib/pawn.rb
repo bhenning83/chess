@@ -36,7 +36,7 @@ class Pawn
 
   def remove_forward_attack
     poss_moves.each do |move|
-      if move[0] == move[0]
+      if pos[0] == move[0]
         spot = board[move[1]][move[0]]
         poss_moves.delete(move) unless spot == ' - '
       end
@@ -88,7 +88,7 @@ class Pawn
     pieces << spot2 unless spot2.nil?
     pieces.each do |piece|
       next if piece == ' - '
-      attackable << piece.pos if piece.color == 'black'
+      attackable << piece.pos if piece.color == 'white'
     end
     attackable
   end
