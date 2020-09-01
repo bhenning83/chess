@@ -29,7 +29,7 @@ class King
   end
 
   def find_poss_moves(poss_pos = [])
-    @find_poss_moves = []
+    @poss_moves = []
     @moves.each do |move|
       pos.each_index do |i|
         poss_pos[i] = pos[i] + move[i]
