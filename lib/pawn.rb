@@ -28,34 +28,12 @@ class Pawn
     @poss_moves = []
     if color == 'black'
       find_poss_move_black
-      #remove_forward_attack_black
     else
       find_poss_move_white
-      #remove_forward_attack_white
     end
   end
 
-  # def remove_forward_attack_black
-  #   find_poss_move_black
-  #   poss_moves.each do |pm|
-  #     poss_moves.delete(pm) unless board[pm[1]][pm[0]] == ' - '
-  #   end
-  #   possible_attacks_black.each do |spot|
-  #     poss_moves << spot
-  #   end
-  # end
-
-  # def remove_forward_attack_white
-  #   find_poss_move_white
-  #   poss_moves.each do |pm|
-  #     poss_moves.delete(pm) unless board[pm[1]][pm[0]] == ' - '
-  #   end
-  #   possible_attacks_black.each do |spot|
-  #     poss_moves << spot
-  #   end
-  # end
-
-  def find_poss_move_white
+  def find_poss_move_white(pieces = [])
     return if pos[1] == 7
     poss_moves << [pos[0], pos[1] + 1]
     if pos[1] == 1
@@ -75,8 +53,12 @@ class Pawn
   end
 
   def possible_attacks_white(pieces = [], attackable = [])
-    pieces << board[pos[1] + 1][pos[0] + 1] unless pos[0] == 7
-    pieces << board[pos[1] + 1][pos[0] - 1] unless pos[0] == 0
+    spot1 = board[pos[1] + 1][pos[0] + 1] unless pos[0] == 7
+    spot1.pos = [pos[0] + 1, pos[1] + 1] unless spot1 == ' - ' || spot1.nil?
+    spot2 = board[pos[1] + 1][pos[0] - 1] unless pos[0] == 0
+    spot2.pos = [pos[0] - 1, pos[1] + 1] unless spot2 == ' - ' || spot2.nil?
+    pieces << spot1 unless spot1.nil?
+    pieces << spot2 unless spot2.nil?
     pieces.each do |piece|
       next if piece == ' - '
       attackable << piece.pos if piece.color == 'black'
@@ -85,11 +67,15 @@ class Pawn
   end
 
   def possible_attacks_black(pieces = [], attackable = [])
-    pieces << board[pos[1] - 1][pos[0] + 1] unless pos[0] == 7
-    pieces << board[pos[1] - 1][pos[0] - 1] unless pos[0] == 0
+    spot1 = board[pos[1] - 1][pos[0] + 1] unless pos[0] == 7
+    spot1.pos = [pos[0] + 1, pos[1] + 1] unless spot1 == ' - ' || spot1.nil?
+    spot2 = board[pos[1] - 1][pos[0] - 1] unless pos[0] == 0
+    spot2.pos = [pos[0] - 1, pos[1] + 1] unless spot2 == ' - ' || spot2.nil?
+    pieces << spot1 unless spot1.nil?
+    pieces << spot2 unless spot2.nil?
     pieces.each do |piece|
       next if piece == ' - '
-      attackable << piece.pos if piece.color == 'white'
+      attackable << piece.pos if piece.color == 'black'
     end
     attackable
   end
