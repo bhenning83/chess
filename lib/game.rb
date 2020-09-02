@@ -157,6 +157,31 @@ class Game
     false
   end
 
+  def prevent_move_into_check(player)
+    prevent_move_into_checkw if player == player1
+    prevent_move_into_checkb if player == player2
+  end
+
+  def prevent_move_into_checkw
+    if checkb?
+      board[player1.old_spot[1]][player1.old_spot[0]] = player1.piece
+      player1.piece.pos = player1.old_spot.dup
+      board[player1.new_spot[1]][player1.new_spot[0]] = ' - '
+      replace_taken_piece(player1)
+      play_turn(player1)
+    end
+  end
+
+  def prevent_move_into_checkb
+    if checkw?
+      board[player2.old_spot[1]][player2.old_spot[0]] = player2.piece
+      player2.piece.pos = player2.old_spot.dup
+      board[player2.new_spot[1]][player2.new_spot[0]] = ' - '
+      replace_taken_piece(player2)
+      play_turn(player2)
+    end
+  end
+
   def checkb?
     target = find_white_king
     black_pieces.each do |piece|
@@ -250,6 +275,7 @@ class Game
     player.select_move_info
     player.move
     attack(player)
+    prevent_move_into_check(player)
     checkmate?(player)
   end
 

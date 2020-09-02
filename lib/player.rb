@@ -2,7 +2,7 @@ require 'pry'
 require_relative 'clearable'
 class Player
   include Clearable
-  attr_accessor :board, :pieces, :piece, :new_spot
+  attr_accessor :board, :pieces, :piece, :new_spot, :old_spot
   attr_reader :color, :taken_piece
 
   def initialize(color, board, pieces)
@@ -11,6 +11,7 @@ class Player
     @pieces = pieces
     @piece = nil
     @new_spot = nil
+    @old_spot = nil
     @taken_piece = nil
   end
 
@@ -89,7 +90,7 @@ class Player
   end
 
   def move
-    old_spot = piece.dup.pos 
+    @old_spot = piece.dup.pos 
     @taken_piece = board[new_spot[1]][new_spot[0]] #for refence when deleting from list of player's pieces
     board[new_spot[1]][new_spot[0]] = piece.dup
     board[old_spot[1]][old_spot[0]] = ' - ' #when it goes twice, this overrides
