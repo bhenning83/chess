@@ -42,6 +42,8 @@ class Game
     @black_pieces_storage = []
     @player1 = Player.new('white', @board, make_white_army)
     @player2 = Player.new('black', @board, make_black_army)
+    set_board
+    @game_over = false
   end
 
   def make_white_army
@@ -149,6 +151,22 @@ class Game
     end
   end
 
+  def check?(player)
+    if player == player1
+      puts "You are in check." if checkb?
+    else
+      puts "You are in check." if checkw?
+    end
+  end
+
+  def checkmate?(player)
+    if player == player1
+      puts "Checkmate. White wins!" if checkmatew?
+    else
+      puts "Checkmate. Black wins!" if checkmateb?
+    end
+  end
+
   def checkw?
     target = find_black_king
     white_pieces.each do |piece|
@@ -211,19 +229,20 @@ class Game
     true
   end
 
-  def reset_board(temp_piece, piece, player)
-    board[temp_piece.pos[1]][temp_piece.pos[0]] = ' - '
-    board[piece.pos[1]][piece.pos[0]] = piece
-    replace_taken_piece(player)
-    set_board
-  end
-
   #temporarily moves defender's pieces to try to block check
   def play_out_move(poss_move, player)
     player.new_spot = poss_move
     return unless player.valid_spot?
     player.move
     attack(player)
+  end
+
+  def reset_board(temp_piece, piece, player)
+    board[temp_piece.pos[1]][temp_piece.pos[0]] = ' - '
+    board[piece.pos[1]][piece.pos[0]] = piece
+    temp_piece.pos = piece.pos
+    replace_taken_piece(player)
+    set_board
   end
 
    #removes a taken piece from that player's list of pieces
@@ -251,31 +270,20 @@ class Game
   
   def play_turn(player)
     display_board
+    check?(player)
     player.select_move_info
     player.move
     attack(player)
-    set_board
+    checkmate?(player)
   end
 
-  def test
-   play_turn(player1)
-   play_turn(player2)
-   play_turn(player1)
-   play_turn(player2)
-   play_turn(player1)
-   play_turn(player2)
-   play_turn(player1)
-   play_turn(player2)
-   play_turn(player1)
-   play_turn(player2)
-   play_turn(player1)
-   play_turn(player2)
-   play_turn(player1)
-   play_turn(player2)
-   display_board
+  def play_game
+    until checkmate?(player1) || checkmate?(player2)
+      play_turn(player1)
+      play_turn(player2)
+    end
   end
 end
 
 game = Game.new
-game.set_board
-game.test
+game.play_game
