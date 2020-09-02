@@ -1,22 +1,3 @@
-# create a board
-# write move method for each piece
-#   each piece will need to know all of it's possible moves
-#     After each move, every piece must see if the opposing king is in it's valid, clear path
-#       if the king is in check, loop through each possible move of each remaining piece on defensive team
-#         at each possible defensive move, check every possible offensive move from every offensive piece
-#         if king is still in check, move to next possible defensive move on king's side
-#         break if king is never in check after checking every offensive move against a single defensive move
-#         declare checkmate if all possible defensive moves on king's side are exhausted and king remains in check
-# all game pieces can overtake opponent in their legal path, except pawns
-# players will have to first input the coord of the piece they want to move
-#   each player will need a piece_log
-#   cycle throught eh piece_log to find the piece at the matching coordinate
-#   assign that piece at that coordinate to an instance variable
-#   get user input on where to move it to
-#   check if it's valid
-#   change coordinate of the piece
-# clear can't be run when finding poss_moves because when checking check, a piece could move out of the original pass and those new moves wouldn't be listed
-
 require_relative 'playable'
 require_relative 'clearable'
 require_relative 'knight'
@@ -26,21 +7,24 @@ require_relative 'queen'
 require_relative 'king'
 require_relative 'pawn'
 require_relative 'player'
+require_relative 'savable'
 
-require 'pry'
+require 'json'
 
 class Game
   include Playable
+  include Savable
   attr_accessor :board, :white_pieces, :black_pieces, :player1, :player2, :game_over
   
   def initialize
     @board = make_board
     @white_pieces = []
     @black_pieces = []
-    @player1 = Player.new('white', @board, make_white_army)
-    @player2 = Player.new('black', @board, make_black_army)
-    set_board
+    @player1 = Player.new('white', @board, make_white_army, @white_pieces, @black_pieces)
+    @player2 = Player.new('black', @board, make_black_army, @white_pieces, @black_pieces)
+    @path = '/Users/brendonhenning/the_odin_project/ruby/chess/saves/'
     @game_over = false
+    @loaded = false
   end
 
   def make_white_army
@@ -88,6 +72,7 @@ class Game
   end
 
   def set_board
+    binding.pry
     white_pieces.each do |piece|
       board[piece.pos[1]][piece.pos[0]] = piece
     end
@@ -280,8 +265,10 @@ class Game
   end
 
   def play_game
+    ask_to_load
+    set_board
     until @game_over == true
-      play_turn(player1)
+      play_turn(player1) unless @loaded == true
       play_turn(player2) unless @game_over == true
     end
   end

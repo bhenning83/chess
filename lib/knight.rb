@@ -1,5 +1,3 @@
-require 'pry'
-
 class Knight
   attr_accessor :pos, :board, :poss_moves
   attr_reader :symbol, :color

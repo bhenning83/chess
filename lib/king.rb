@@ -1,7 +1,4 @@
-require_relative 'playable'
-
 class King
-  include Playable
   attr_accessor :pos, :board, :poss_moves, :symbol
   attr_reader :color
 

@@ -1,8 +1,8 @@
-require_relative 'playable'
-require 'pry'
+require_relative 'savable'
 
 class Pawn
-  include Playable
+  include Savable
+
   attr_accessor :pos, :board, :poss_moves
   attr_reader :color, :symbol
 

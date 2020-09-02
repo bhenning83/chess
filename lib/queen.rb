@@ -1,10 +1,8 @@
-require_relative 'playable'
 require_relative 'clearable'
-require 'pry'
 
 class Queen
-  include Playable
   include Clearable
+
   attr_accessor :pos, :board, :poss_moves
   attr_reader :symbol, :color
   

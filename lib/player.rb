@@ -1,49 +1,60 @@
-require 'pry'
 require_relative 'clearable'
+require_relative 'savable'
+
+require 'json'
+
 class Player
-  include Clearable
+  include Clearable 
+  include Savable
   attr_accessor :board, :pieces, :piece, :new_spot, :old_spot
   attr_reader :color, :taken_piece
 
-  def initialize(color, board, pieces)
+  def initialize(color, board, pieces, white_pieces, black_pieces)
     @color = color
     @board = board
     @pieces = pieces
+    @white_pieces = white_pieces
+    @black_pieces = black_pieces
     @piece = nil
     @new_spot = nil
     @old_spot = nil
     @taken_piece = nil
+    @path = '/Users/brendonhenning/the_odin_project/ruby/chess/saves/'
   end
 
   def select_piece
-    puts "#{color}, select piece to move"
+    puts "#{color}, select piece to move\nor type \'save\' to save game."
     input = input_getter
     if input[0] > 7 || input[0] < 0 || input[1] > 7 || input[1] < 0
       select_piece
       return nil
     end
     @piece = board[input[1]][input[0]]
-    piece.pos = input unless piece == ' - '
+    @piece.pos = input unless piece == ' - '
     select_piece if invalid?(input)
   end
 
   def input_getter
-    input = gets.chomp.strip.gsub(/[{}()<>\[\] ,]/, '').split(//)
+    input = gets.chomp.downcase.strip.gsub(/[{}()<>\[\] ,]/, '').split(//)
+    if input == 'save'.split(//)
+      save
+      select_piece
+      return
+    end
     input[0] = input_converter(input[0]) if input[0].match?(/[A-Za-z]/)
     input[0] = input[0].to_i - 1; input[1] = input[1].to_i - 1
     input
   end
 
   def input_converter(letter)
-    letter.upcase!
-    return 1 if letter == 'A'
-    return 2 if letter == 'B'
-    return 3 if letter == 'C'
-    return 4 if letter == 'D'
-    return 5 if letter == 'E'
-    return 6 if letter == 'F'
-    return 7 if letter == 'G'
-    return 8 if letter == 'H'
+    return 1 if letter == 'a'
+    return 2 if letter == 'b'
+    return 3 if letter == 'c'
+    return 4 if letter == 'd'
+    return 5 if letter == 'e'
+    return 6 if letter == 'f'
+    return 7 if letter == 'g'
+    return 8 if letter == 'h'
   end
 
   def invalid?(input)
@@ -76,7 +87,7 @@ class Player
 
   def pick_again
     unless valid_spot?
-      puts "Invalid move, try again."
+      puts "Invalid move, try again.\n"
       select_move_info
       return nil
     end

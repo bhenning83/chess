@@ -1,4 +1,3 @@
-require 'pry'
 module Clearable
   def clear?(new_spot)
     if new_spot[0] == pos[0]
