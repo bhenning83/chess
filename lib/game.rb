@@ -31,15 +31,12 @@ require 'pry'
 
 class Game
   include Playable
-  attr_accessor :board, :white_pieces, :black_pieces, :player1, :player2
-  attr_accessor :kingw, :kingb, :white_pieces_storage, :black_pieces_storage
+  attr_accessor :board, :white_pieces, :black_pieces, :player1, :player2, :game_over
   
   def initialize
     @board = make_board
     @white_pieces = []
     @black_pieces = []
-    @white_pieces_storage = []
-    @black_pieces_storage = []
     @player1 = Player.new('white', @board, make_white_army)
     @player2 = Player.new('black', @board, make_black_army)
     set_board
@@ -55,14 +52,7 @@ class Game
     pawn6w = Pawn.new([5, 1], 'white', board, ' ♟︎ ')
     pawn7w = Pawn.new([6, 1], 'white', board, ' ♟︎ ')
     pawn8w = Pawn.new([7, 1], 'white', board, ' ♟︎ ')
-    white_pieces << pawn1w
-    white_pieces << pawn2w
-    white_pieces << pawn3w
-    white_pieces << pawn4w
-    white_pieces << pawn5w
-    white_pieces << pawn6w
-    white_pieces << pawn7w
-    white_pieces << pawn8w
+    white_pieces << pawn1w << pawn2w << pawn3w << pawn4w << pawn5w << pawn6w << pawn7w << pawn8w
     rook1w = Rook.new([0, 0], 'white', board, ' ♜ ')
     rook2w = Rook.new([7, 0], 'white', board, ' ♜ ')
     knight1w = Knight.new([1, 0], 'white', board, ' ♞ ')
@@ -71,14 +61,7 @@ class Game
     bishop2w = Bishop.new([5, 0], 'white', board, ' ♝ ')
     queenw = Queen.new([3, 0], 'white', board, ' ♛ ')
     kingw = King.new([4, 0], 'white', board, ' ♚ ')
-    white_pieces << rook1w
-    white_pieces << rook2w
-    white_pieces << knight1w
-    white_pieces << knight2w
-    white_pieces << bishop1w
-    white_pieces << bishop2w
-    white_pieces << queenw
-    white_pieces << kingw
+    white_pieces << rook1w << rook2w << knight1w << knight2w << bishop1w << bishop2w << queenw << kingw
     white_pieces
   end
 
@@ -91,14 +74,7 @@ class Game
     pawn6b = Pawn.new([5, 6], 'black', board, ' ♙ ')
     pawn7b = Pawn.new([6, 6], 'black', board, ' ♙ ')
     pawn8b = Pawn.new([7, 6], 'black', board, ' ♙ ')
-    black_pieces << pawn1b 
-    black_pieces << pawn2b 
-    black_pieces << pawn3b 
-    black_pieces << pawn4b 
-    black_pieces << pawn5b 
-    black_pieces << pawn6b 
-    black_pieces << pawn7b 
-    black_pieces << pawn8b
+    black_pieces << pawn1b << pawn2b << pawn3b << pawn4b << pawn5b << pawn6b << pawn7b << pawn8b
     rook1b = Rook.new([0, 7], 'black', board, ' ♖ ')
     rook2b = Rook.new([7, 7], 'black', board, ' ♖ ')
     knight1b = Knight.new([1, 7], 'black', board, ' ♘ ')
@@ -107,14 +83,7 @@ class Game
     bishop2b = Bishop.new([5, 7], 'black', board, ' ♗ ')
     queenb = Queen.new([3, 7], 'black', board, ' ♕ ')
     kingb = King.new([4, 7], 'black', board, ' ♔ ')
-    black_pieces << rook1b
-    black_pieces << rook2b
-    black_pieces << knight1b
-    black_pieces << knight2b
-    black_pieces << bishop1b
-    black_pieces << bishop2b
-    black_pieces << queenb
-    black_pieces << kingb
+    black_pieces << rook1b << rook2b << knight1b << knight2b << bishop1b << bishop2b << queenb << kingb
     black_pieces
   end
 
@@ -160,10 +129,17 @@ class Game
   end
 
   def checkmate?(player)
+    return if @game_over == true #prevents double announcement
     if player == player1
-      puts "Checkmate. White wins!" if checkmatew?
+      if checkmatew?
+        puts "\nCheckmate. White wins!"
+        @game_over = true
+      end
     else
-      puts "Checkmate. Black wins!" if checkmateb?
+      if checkmateb?
+        puts "\nCheckmate. Black wins!" 
+        @game_over = true
+      end
     end
   end
 
@@ -278,9 +254,9 @@ class Game
   end
 
   def play_game
-    until checkmate?(player1) || checkmate?(player2)
+    until @game_over == true
       play_turn(player1)
-      play_turn(player2)
+      play_turn(player2) unless @game_over == true
     end
   end
 end
