@@ -23,8 +23,8 @@ class Game
     @player1 = Player.new('white', @board, make_white_army, @white_pieces, @black_pieces)
     @player2 = Player.new('black', @board, make_black_army, @white_pieces, @black_pieces)
     @path = '/Users/brendonhenning/the_odin_project/ruby/chess/saves/'
+    @player_turn = nil
     @game_over = false
-    @loaded = false
   end
 
   def make_white_army
@@ -106,9 +106,9 @@ class Game
 
   def check?(player)
     if player == player1
-      puts "You are in check." if checkb?
+      puts "YOU ARE IN CHECK." if checkb?
     else
-      puts "You are in check." if checkw?
+      puts "YOU ARE IN CHECK." if checkw?
     end
   end
 
@@ -261,13 +261,14 @@ class Game
     attack(player)
     prevent_move_into_check(player)
     checkmate?(player)
+    @player_turn = nil
   end
 
   def play_game
     ask_to_load
     set_board
     until @game_over == true
-      play_turn(player1) unless @loaded == true
+      play_turn(player1) unless @player_turn == 'black'
       play_turn(player2) unless @game_over == true
     end
   end

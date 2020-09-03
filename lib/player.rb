@@ -19,6 +19,7 @@ class Player
     @new_spot = nil
     @old_spot = nil
     @taken_piece = nil
+    @player_turn = color
     @path = '/Users/brendonhenning/the_odin_project/ruby/chess/saves/'
   end
 
