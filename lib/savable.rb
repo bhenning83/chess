@@ -1,5 +1,4 @@
 require 'json'
-require 'pry'
 
 module Savable
   def to_json(*_args)
@@ -24,7 +23,6 @@ module Savable
     save_name = gets.chomp
     stream = save_piece_lists
     File.open(@path + save_name, 'w') { |f| f.puts stream }
-    binding.pry
     puts 'Game saved. Do you want to quit your game? yes/no'
     if gets.chomp.downcase == 'yes'
       puts 'k bye'
@@ -39,7 +37,6 @@ module Savable
     data = JSON.parse(save)
     load_piece_lists(data)
     @player_turn = data['player_turn']
-    binding.pry
   end
 
   def create_from_json(piece_data, ary)
