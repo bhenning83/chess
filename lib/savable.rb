@@ -4,9 +4,9 @@ require 'pry'
 module Savable
   def to_json(*_args)
     JSON.dump({
+                type: self.class,
                 pos: @pos,
                 color: @color,
-                poss_moves: @poss_moves,
                 symbol: @symbol
               })
   end
@@ -34,22 +34,23 @@ module Savable
     puts 'What is the name of your saved game?'
     answer = gets.chomp
     save = File.read(@path + answer)
-    binding.pry
     data = JSON.parse(save)
-    binding.pry
-    load_piece_lists(save)
+    load_piece_lists(data)
     @loaded = true
   end
 
-  def create_from_json(data)
-    self.new(data['pos'], data['color'], data['poss_moves'], data['symbol'])
+  def create_from_json(piece_data, ary)
+    type = piece_data['type'] #gives str
+    type = Object.const_get(type) #converts str to literal
+    piece = type.new(piece_data['pos'], piece_data['color'], @board, piece_data['symbol'])
+    ary << piece
+    ary
   end
 
   def load_piece_lists(data)
-    test = JSON.parse(data)
-    binding.pry
-    @white_pieces = test['white_pieces'].each {|piece| piece.create_from_json(test)}
-    @black_pieces = test['black_pieces'].each {|piece| piece.create_from_json(test)}
+    @white_pieces = []; @black_pieces = []
+    data['white_pieces'].each { |piece_data| create_from_json(piece_data, @white_pieces)}
+    data['black_pieces'].each { |piece_data| create_from_json(piece_data, @black_pieces)}
   end
 
   def ask_to_load

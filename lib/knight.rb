@@ -1,4 +1,7 @@
+require_relative 'savable'
+
 class Knight
+  include Savable
   attr_accessor :pos, :board, :poss_moves
   attr_reader :symbol, :color
 

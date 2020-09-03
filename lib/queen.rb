@@ -1,7 +1,9 @@
 require_relative 'clearable'
+require_relative 'savable'
 
 class Queen
   include Clearable
+  include Savable
 
   attr_accessor :pos, :board, :poss_moves
   attr_reader :symbol, :color

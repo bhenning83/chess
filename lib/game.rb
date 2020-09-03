@@ -72,7 +72,6 @@ class Game
   end
 
   def set_board
-    binding.pry
     white_pieces.each do |piece|
       board[piece.pos[1]][piece.pos[0]] = piece
     end

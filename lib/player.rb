@@ -87,7 +87,7 @@ class Player
 
   def pick_again
     unless valid_spot?
-      puts "Invalid move, try again.\n"
+      puts "Invalid move, try again.\n\n"
       select_move_info
       return nil
     end

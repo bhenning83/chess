@@ -1,4 +1,7 @@
+require_relative 'savable'
+
 class King
+  include Savable
   attr_accessor :pos, :board, :poss_moves, :symbol
   attr_reader :color
 
